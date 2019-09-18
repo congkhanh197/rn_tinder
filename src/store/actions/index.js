@@ -1,5 +1,5 @@
 import { getPersonInfoAction } from "./peopleInfoAction";
 
-export default {
+export {
   getPersonInfoAction
 };

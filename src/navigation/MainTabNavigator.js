@@ -9,17 +9,9 @@ import TabBarIcon from "../components/TabBarIcon";
 import DiscoverScreen from "../screens/DiscoverScreen/Discover.screen";
 import FavoriteScreen from "../screens/FavoriteScreen/Favorite.screen";
 
-const config = Platform.select({
-  web: { headerMode: "screen" },
-  default: {}
+const DiscoverStack = createStackNavigator({
+  Discover: DiscoverScreen
 });
-
-const DiscoverStack = createStackNavigator(
-  {
-    Home: DiscoverScreen
-  },
-  config
-);
 
 DiscoverStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
@@ -32,12 +24,9 @@ DiscoverStack.navigationOptions = {
 
 DiscoverStack.path = "";
 
-const FavoriteStack = createStackNavigator(
-  {
-    Favorite: FavoriteScreen
-  },
-  config
-);
+const FavoriteStack = createStackNavigator({
+  Favorite: FavoriteScreen
+});
 
 FavoriteStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
