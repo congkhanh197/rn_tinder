@@ -1,74 +1,18 @@
 import React, { Component } from "react";
-import {
-  Text,
-  View,
-  Dimensions,
-  Image,
-  TouchableOpacity,
-  StyleSheet
-} from "react-native";
-import { FontAwesome, Feather } from "@expo/vector-icons";
-import { upperFirst } from "../utils/stringUtils";
-import moment from "moment";
-
-const { width, height } = Dimensions.get("window");
-const viewWidth = width * 0.8;
-
+import { Text, View, Image, TouchableOpacity } from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
+import styles from "./styles/CardItem.styles";
 const COLORS = {
   enable: "green",
   disable: "gray"
 };
-const listIcon = ["user-o", "calendar", "map-o", "phone", "lock"];
 
 export class CardItem extends Component {
   state = {
-    chooseItem: listIcon[0]
-  };
-
-  getInfoText = (title, detail) => (
-    <>
-      <Text style={styles.titleText}>{title}</Text>
-      <Text style={styles.detailText}>{detail}</Text>
-    </>
-  );
-
-  renderInfoText = () => {
-    const { peopleInfo } = this.props;
-    switch (this.state.chooseItem) {
-      case listIcon[0]:
-        return this.getInfoText(
-          "My name is",
-          upperFirst(
-            peopleInfo.name.title +
-              ". " +
-              peopleInfo.name.first +
-              " " +
-              peopleInfo.name.last
-          )
-        );
-
-      case listIcon[1]:
-        return this.getInfoText(
-          "My birthday is",
-          moment.unix(peopleInfo.dob).format("D/M/YYYY")
-        );
-
-      case listIcon[2]:
-        const { location } = this.props.peopleInfo;
-        return this.getInfoText("My address is", upperFirst(location.street));
-
-      case listIcon[3]:
-        return this.getInfoText("My phone is", peopleInfo.phone);
-
-      case listIcon[4]:
-        return this.getInfoText("My phone is", peopleInfo.password);
-
-      default:
-        break;
-    }
+    chooseIndex: 0
   };
   render() {
-    const { peopleInfo } = this.props;
+    const { picture, info } = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.header} />
@@ -83,31 +27,38 @@ export class CardItem extends Component {
           />
         </View>
         <View style={styles.avatarWrapper}>
-          <Image source={{ uri: peopleInfo.picture }} style={styles.avatar} />
+          <Image source={{ uri: picture }} style={styles.avatar} />
         </View>
-        <View style={styles.infoTextWrapper}>{this.renderInfoText()}</View>
+        <View style={styles.infoTextWrapper}>
+          <Text style={styles.titleText}>
+            {info[this.state.chooseIndex].title}
+          </Text>
+          <Text style={styles.detailText}>
+            {info[this.state.chooseIndex].value}
+          </Text>
+        </View>
         <View style={styles.chooseButtonWrapper}>
-          {listIcon.map(item => (
+          {info.map((item, index) => (
             <TouchableOpacity
               style={[
                 {
                   borderTopColor:
-                    this.state.chooseItem === item
+                    this.state.chooseIndex === index
                       ? COLORS.enable
                       : "transparent"
                 },
                 styles.button
               ]}
-              key={item}
+              key={item.title}
               onPress={() => {
-                this.setState({ chooseItem: item });
+                this.setState({ chooseIndex: index });
               }}
             >
               <FontAwesome
-                name={item}
+                name={item.iconName}
                 size={30}
                 color={
-                  this.state.chooseItem === item
+                  this.state.chooseIndex === index
                     ? COLORS.enable
                     : COLORS.disable
                 }
@@ -119,82 +70,5 @@ export class CardItem extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 20,
-    marginHorizontal: width * 0.1,
-    width: viewWidth,
-    backgroundColor: "white",
-    borderRadius: 4,
-    alignItems: "center"
-  },
-  header: {
-    backgroundColor: "#f9f9f9",
-    width: viewWidth - 2,
-    height: 100,
-    borderBottomColor: "gray",
-    borderBottomWidth: 1
-  },
-  borderAvatar: {
-    justifyContent: "center",
-    alignItems: "center",
-    position: "absolute",
-    top: 25,
-    borderWidth: 1,
-    borderColor: "gray",
-    backgroundColor: "white",
-    width: 110,
-    height: 110,
-    borderRadius: 55,
-    zIndex: 1
-  },
-  defaultAvatar: {
-    justifyContent: "center",
-    alignItems: "center",
-    position: "absolute",
-    top: 30,
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    overflow: "hidden",
-    zIndex: 2
-  },
-  avatarWrapper: {
-    justifyContent: "center",
-    alignItems: "center",
-    position: "absolute",
-    top: 30,
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    overflow: "hidden",
-    zIndex: 3
-  },
-  avatar: { width: 100, height: 100, borderRadius: 50 },
-  infoTextWrapper: { marginTop: 60, marginBottom: 30, alignItems: "center" },
-  chooseButtonWrapper: {
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    alignItems: "center",
-    width: "100%",
-    marginBottom: 10
-  },
-  button: {
-    borderTopWidth: 2,
-    width: 35,
-    height: 40,
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  titleText: {
-    color: "gray",
-    fontSize: 20
-  },
-  detailText: {
-    color: "black",
-    fontSize: 25
-  }
-});
 
 export default CardItem;

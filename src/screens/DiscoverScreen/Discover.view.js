@@ -4,6 +4,8 @@ import { Text, View } from "react-native";
 import CardStack, { Card } from "react-native-card-stack-swiper";
 import CardItem from "../../components/CardItem";
 import LoadingCard from "./components/LoadingCard";
+import { upperFirst, formatPeopleInfo } from "../../utils/stringUtils";
+import moment from "moment";
 
 export class DiscoverView extends Component {
   onSwipedRight = index => {
@@ -23,9 +25,9 @@ export class DiscoverView extends Component {
           onSwipedRight={this.onSwipedRight}
           onSwiped={this.props.getPersonInfoAction}
         >
-          {this.props.infos.map((item, index) => (
+          {this.props.infos.map((peopleInfo, index) => (
             <Card key={index}>
-              <CardItem peopleInfo={item} />
+              <CardItem {...formatPeopleInfo(peopleInfo)} />
             </Card>
           ))}
         </CardStack>

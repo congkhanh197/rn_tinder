@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Text, View, FlatList } from "react-native";
 import CardItem from "../../components/CardItem";
+import { formatPeopleInfo } from "../../utils/stringUtils";
+
 
 export class FavoriteView extends Component {
   render() {
@@ -8,7 +10,13 @@ export class FavoriteView extends Component {
       <View style={{ flex: 1, backgroundColor: "lightgray" }}>
         <FlatList
           data={this.props.peopleList}
-          renderItem={({ item }) => <CardItem peopleInfo={item} />}
+          renderItem={({ item }) => {
+            return (
+              <CardItem
+                {...formatPeopleInfo(item)}
+              />
+            );
+          }}
           keyExtractor={item => item.md5}
         />
       </View>
