@@ -5,9 +5,17 @@ import styles from "../../assets/styles";
 // import Card from "./components/Card";
 
 import CardStack, { Card } from "react-native-card-stack-swiper";
-import CardItem from "./components/CardItem";
+import CardItem from "../../components/CardItem";
 
 export class DiscoverView extends Component {
+  onSwipedLeft = data => {
+    console.log("left", data);
+    this.props.getPersonInfoAction();
+  };
+  onSwipedRight = () => {
+    this.props.addFavoritePeopleAction(this.props.info[0]);
+    this.props.getPersonInfoAction();
+  };
   render() {
     console.log("render", this.props.info.length);
     const { info } = this.props;
@@ -20,26 +28,20 @@ export class DiscoverView extends Component {
         </View>
       );
     }
+
     return (
       <View style={{ flex: 1, backgroundColor: "lightgray" }}>
         <CardStack
-          loop={true}
+          style={{ marginVertical: 100 }}
           verticalSwipe={false}
           renderNoMoreCards={() => null}
           ref={swiper => (this.swiper = swiper)}
+          onSwipedLeft={this.onSwipedLeft}
+          onSwipedRight={this.onSwipedRight}
         >
           {info.map((item, index) => (
             <Card key={index}>
-              <CardItem
-                peopleInfo={item}
-                // image={item.image}
-                // name={item.name}
-                // description={item.description}
-                // matches={item.match}
-                // actions
-                // onPressLeft={() => this.swiper.swipeLeft()}
-                // onPressRight={() => this.swiper.swipeRight()}
-              />
+              <CardItem peopleInfo={item} />
             </Card>
           ))}
         </CardStack>

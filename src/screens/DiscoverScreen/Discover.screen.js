@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import DiscoverView from "./Discover.view";
 import { SafeAreaView, View } from "react-native";
-import { Text } from "react-native";
 import { connect } from "react-redux";
+import Constants from "expo-constants";
 
 import { getPersonInfoAction } from "../../store/actions";
+import { addFavoritePeopleAction } from "../../store/actions/favoriteAction";
 
 export class DiscoverScreen extends Component {
   static navigationOptions = {
@@ -16,7 +17,7 @@ export class DiscoverScreen extends Component {
   }
   render() {
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1, marginTop: Constants.statusBarHeight }}>
         <DiscoverView {...this.props} />
       </SafeAreaView>
     );
@@ -32,7 +33,9 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  getPersonInfoAction: () => dispatch(getPersonInfoAction())
+  getPersonInfoAction: () => dispatch(getPersonInfoAction()),
+  addFavoritePeopleAction: peopleInfo =>
+    dispatch(addFavoritePeopleAction(peopleInfo))
 });
 
 export default connect(

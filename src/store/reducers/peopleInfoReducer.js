@@ -14,7 +14,7 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         loading: false,
-        info: [...state.info, payload]
+        info: [payload]
       };
     case C.GET_PERSON_INFO_FAILURE:
       return {
