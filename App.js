@@ -1,16 +1,21 @@
 import { AppLoading } from "expo";
 import { Asset } from "expo-asset";
 import * as Font from "expo-font";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Platform, StatusBar, StyleSheet, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Provider } from "react-redux";
 import store from "./src/store";
 
 import AppNavigator from "./src/navigation/AppNavigator";
+import { retrieveFavoritePeopleDataAction } from "./src/store/actions/favoriteAction";
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
+
+  useEffect(() => {
+    store.dispatch(retrieveFavoritePeopleDataAction());
+  }, []);
 
   if (!isLoadingComplete && !props.skipLoadingScreen) {
     return (

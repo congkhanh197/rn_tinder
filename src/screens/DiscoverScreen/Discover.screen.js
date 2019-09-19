@@ -28,7 +28,8 @@ const mapStateToProps = state => {
   return {
     loading: state.peopleInfoReducer.loading,
     error: state.peopleInfoReducer.error,
-    infos: state.peopleInfoReducer.infos
+    infos: state.peopleInfoReducer.infos,
+    favoriteList: state.favoriteReducer.peopleList
   };
 };
 

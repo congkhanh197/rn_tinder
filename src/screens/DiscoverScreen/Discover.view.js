@@ -7,7 +7,10 @@ import LoadingCard from "./components/LoadingCard";
 
 export class DiscoverView extends Component {
   onSwipedRight = index => {
-    this.props.addFavoritePeopleAction(this.props.infos[index]);
+    this.props.addFavoritePeopleAction([
+      ...this.props.favoriteList,
+      this.props.infos[index]
+    ]);
   };
   render() {
     return (

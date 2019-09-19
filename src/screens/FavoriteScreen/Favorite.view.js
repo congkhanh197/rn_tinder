@@ -4,7 +4,6 @@ import CardItem from "../../components/CardItem";
 
 export class FavoriteView extends Component {
   render() {
-    console.log(this.props.peopleList);
     return (
       <View style={{ flex: 1, backgroundColor: "lightgray" }}>
         <FlatList
