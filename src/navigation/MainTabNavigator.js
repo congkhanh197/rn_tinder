@@ -4,10 +4,12 @@ import {
   createStackNavigator,
   createBottomTabNavigator
 } from "react-navigation";
+import Colors from "../constants/Colors";
 
 import TabBarIcon from "../components/TabBarIcon";
 import DiscoverScreen from "../screens/DiscoverScreen/Discover.screen";
 import FavoriteScreen from "../screens/FavoriteScreen/Favorite.screen";
+import FavoriteIconWithBadge from "../screens/FavoriteScreen/components/FavoriteIconWithBadge";
 
 const DiscoverStack = createStackNavigator({
   Discover: DiscoverScreen
@@ -30,33 +32,16 @@ const FavoriteStack = createStackNavigator({
 
 FavoriteStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
+    <FavoriteIconWithBadge
       name={Platform.OS === "ios" ? "ios-heart" : "md-heart"}
+      size={26}
+      style={{ marginBottom: -3 }}
+      color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
     />
   )
 };
 
 FavoriteStack.path = "";
-
-// const SettingsStack = createStackNavigator(
-//   {
-//     Settings: SettingsScreen
-//   },
-//   config
-// );
-
-// SettingsStack.navigationOptions = {
-//   tabBarLabel: "Settings",
-//   tabBarIcon: ({ focused }) => (
-//     <TabBarIcon
-//       focused={focused}
-//       name={Platform.OS === "ios" ? "ios-options" : "md-options"}
-//     />
-//   )
-// };
-
-// SettingsStack.path = "";
 
 const tabNavigator = createBottomTabNavigator(
   {

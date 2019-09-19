@@ -1,45 +1,26 @@
 import React, { Component } from "react";
-import { Text, View, StyleSheet, ActivityIndicator } from "react-native";
-import styles from "../../assets/styles";
-
-// import Card from "./components/Card";
+import { Text, View } from "react-native";
 
 import CardStack, { Card } from "react-native-card-stack-swiper";
 import CardItem from "../../components/CardItem";
+import LoadingCard from "./components/LoadingCard";
 
 export class DiscoverView extends Component {
-  onSwipedLeft = data => {
-    console.log("left", data);
-    this.props.getPersonInfoAction();
-  };
-  onSwipedRight = () => {
-    this.props.addFavoritePeopleAction(this.props.info[0]);
-    this.props.getPersonInfoAction();
+  onSwipedRight = index => {
+    this.props.addFavoritePeopleAction(this.props.infos[index]);
   };
   render() {
-    console.log("render", this.props.info.length);
-    const { info } = this.props;
-    if (this.props.loading === true) {
-      return (
-        <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-        >
-          <ActivityIndicator />
-        </View>
-      );
-    }
-
     return (
       <View style={{ flex: 1, backgroundColor: "lightgray" }}>
         <CardStack
+          secondCardZoom={1}
           style={{ marginVertical: 100 }}
           verticalSwipe={false}
-          renderNoMoreCards={() => null}
-          ref={swiper => (this.swiper = swiper)}
-          onSwipedLeft={this.onSwipedLeft}
+          renderNoMoreCards={() => <LoadingCard />}
           onSwipedRight={this.onSwipedRight}
+          onSwiped={this.props.getPersonInfoAction}
         >
-          {info.map((item, index) => (
+          {this.props.infos.map((item, index) => (
             <Card key={index}>
               <CardItem peopleInfo={item} />
             </Card>

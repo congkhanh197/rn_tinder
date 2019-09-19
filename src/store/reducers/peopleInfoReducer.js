@@ -1,7 +1,7 @@
 import * as C from "../constants";
 
 const initialState = {
-  info: [],
+  infos: [],
   loading: true,
   error: null
 };
@@ -14,7 +14,7 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         loading: false,
-        info: [payload]
+        infos: [...state.infos, payload]
       };
     case C.GET_PERSON_INFO_FAILURE:
       return {

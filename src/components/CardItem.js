@@ -38,11 +38,13 @@ export class CardItem extends Component {
       case listIcon[0]:
         return this.getInfoText(
           "My name is",
-          upperFirst(peopleInfo.name.title) +
-            ". " +
-            upperFirst(peopleInfo.name.first) +
-            " " +
-            upperFirst(peopleInfo.name.last)
+          upperFirst(
+            peopleInfo.name.title +
+              ". " +
+              peopleInfo.name.first +
+              " " +
+              peopleInfo.name.last
+          )
         );
 
       case listIcon[1]:
@@ -66,15 +68,22 @@ export class CardItem extends Component {
     }
   };
   render() {
+    const { peopleInfo } = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.header} />
         <View style={styles.borderAvatar} />
-        <View style={styles.avatarWrapper}>
+        <View style={styles.defaultAvatar}>
           <Image
-            source={{ uri: "https://randomuser.me/api/portraits/men/60.jpg" }}
+            source={{
+              uri:
+                "https://i1.wp.com/www.mvhsoracle.com/wp-content/uploads/2018/08/default-avatar.jpg"
+            }}
             style={styles.avatar}
           />
+        </View>
+        <View style={styles.avatarWrapper}>
+          <Image source={{ uri: peopleInfo.picture }} style={styles.avatar} />
         </View>
         <View style={styles.infoTextWrapper}>{this.renderInfoText()}</View>
         <View style={styles.chooseButtonWrapper}>
@@ -140,6 +149,17 @@ const styles = StyleSheet.create({
     borderRadius: 55,
     zIndex: 1
   },
+  defaultAvatar: {
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    top: 30,
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    overflow: "hidden",
+    zIndex: 2
+  },
   avatarWrapper: {
     justifyContent: "center",
     alignItems: "center",
@@ -149,8 +169,7 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 50,
     overflow: "hidden",
-    backgroundColor: "lightgray",
-    zIndex: 2
+    zIndex: 3
   },
   avatar: { width: 100, height: 100, borderRadius: 50 },
   infoTextWrapper: { marginTop: 60, marginBottom: 30, alignItems: "center" },

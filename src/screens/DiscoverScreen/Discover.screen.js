@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import DiscoverView from "./Discover.view";
-import { SafeAreaView, View } from "react-native";
+import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import Constants from "expo-constants";
 
@@ -28,7 +28,7 @@ const mapStateToProps = state => {
   return {
     loading: state.peopleInfoReducer.loading,
     error: state.peopleInfoReducer.error,
-    info: state.peopleInfoReducer.info
+    infos: state.peopleInfoReducer.infos
   };
 };
 
